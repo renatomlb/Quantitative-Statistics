@@ -1,0 +1,109 @@
+/* ── 3.1  Correlation Definition (vertical stack) ────────────────────────── */
+.dd--corr-def {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-corr-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.dd-corr-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.dd-corr-panel-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 2px;
+}
+
+.dd-corr-panel-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dd-corr-panel-r {
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.dd-corr-svg {
+  width: 100%;
+  max-width: 260px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-card);
+}
+
+/* ── 3.2  r-Coefficient Scale (vertical) ─────────────────────────────────── */
+.dd--r-coeff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-r-svg {
+  width: 100%;
+  max-width: 230px;
+}
+
+.dd-r-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.dd-r-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-r-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── 3.3  Scatter + Trendline ────────────────────────────────────────────── */
+.dd--corr-math {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-corr-math-svg {
+  width: 100%;
+  max-width: 270px;
+}
+
+/* ── 3.4  Correlation vs Causation ───────────────────────────────────────── */
+.dd--corr-cause {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-corr-cause-svg {
+  width: 100%;
+  max-width: 280px;
+}

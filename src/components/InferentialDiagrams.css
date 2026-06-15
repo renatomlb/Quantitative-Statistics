@@ -1,0 +1,207 @@
+/* ── Shared SVG wrapper ───────────────────────────────────────────────────── */
+.dd-inf-svg {
+  width: 100%;
+  display: block;
+}
+
+/* ── Per-diagram containers ──────────────────────────────────────────────── */
+.dd--inf-pop,
+.dd--inf-hyp,
+.dd--inf-pval,
+.dd--inf-errors,
+.dd--inf-decision,
+.dd--inf-between,
+.dd--inf-within,
+.dd--inf-indt,
+.dd--inf-paired,
+.dd--inf-tsn,
+.dd--inf-crit,
+.dd--inf-chi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Vertical diagrams — narrower max-width to emphasise portrait orientation */
+.dd--inf-pop     .dd-inf-svg { max-width: 210px; }
+.dd--inf-hyp     .dd-inf-svg { max-width: 240px; }
+.dd--inf-pval    .dd-inf-svg { max-width: 228px; }
+
+/* Fixed / improved diagrams */
+.dd--inf-errors  .dd-inf-svg { max-width: 270px; }
+.dd--inf-decision .dd-inf-svg { max-width: 256px; }
+.dd--inf-between .dd-inf-svg { max-width: 270px; }
+.dd--inf-within  .dd-inf-svg { max-width: 270px; }
+.dd--inf-indt    .dd-inf-svg { max-width: 270px; }
+.dd--inf-paired  .dd-inf-svg { max-width: 320px; }
+.dd--inf-tsn     .dd-inf-svg { max-width: 270px; }
+.dd--inf-crit    .dd-inf-svg { max-width: 270px; }
+.dd--inf-chi     .dd-inf-svg { max-width: 270px; }
+
+/* LaTeX formula rendered by KaTeX below the chi-square table */
+.dd-inf-formula {
+  text-align: center;
+  font-size: 0.95rem;
+  padding: 2px 0 4px;
+  width: 100%;
+}
+
+/* ── 5.2  Hypothesis Testing Steps (HTML 4-step) ──────────────────────────── */
+.hts {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.hts-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid;
+}
+
+.hts-step__num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hts-step__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.hts-step__detail {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.hts-arrow {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  padding: 2px 0;
+}
+
+/* ── 5.3  Research Design Decision Tree (HTML) ────────────────────────────── */
+.ddd {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.ddd-question {
+  text-align: center;
+  background: rgba(240, 165, 0, 0.08);
+  border: 1.5px solid #f0a500;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #7d6608;
+  line-height: 1.5;
+}
+
+.ddd-question__sub {
+  display: block;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.74rem;
+  color: #a07800;
+  margin-top: 3px;
+}
+
+.ddd-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ddd-branch {
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ddd-branch--yes { background: rgba(59, 178, 115, 0.08); border: 1.5px solid #1e8449; }
+.ddd-branch--no  { background: rgba(46, 134, 171, 0.08); border: 1.5px solid #2471a3; }
+
+.ddd-branch__label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.ddd-branch--yes .ddd-branch__label { color: #1e8449; }
+.ddd-branch--no  .ddd-branch__label { color: #2471a3; }
+
+.ddd-branch__title {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.ddd-branch--yes .ddd-branch__title { color: #145a32; }
+.ddd-branch--no  .ddd-branch__title { color: #1a5276; }
+
+.ddd-branch__test {
+  font-size: 0.77rem;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.ddd-branch--yes .ddd-branch__test { background: rgba(30, 132, 73, 0.13); color: #1e8449; }
+.ddd-branch--no  .ddd-branch__test { background: rgba(36, 113, 163, 0.13); color: #2471a3; }
+
+.ddd-branch__desc {
+  font-size: 0.71rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+/* ── 5.4  t vs Normal diagram ─────────────────────────────────────────────── */
+.dd--inf-tvsnorm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.dd--inf-tvsnorm .dd-inf-svg { max-width: 350px; }
+
+.dd-inf-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.dd-inf-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}

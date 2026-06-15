@@ -1,0 +1,33 @@
+.footer {
+  background: var(--color-surface);
+}
+
+.footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 28px;
+}
+
+.footer__rule {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0 0 18px;
+}
+
+.footer__text {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.footer__email {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer__email:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}

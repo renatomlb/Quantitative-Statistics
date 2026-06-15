@@ -1,0 +1,263 @@
+/* ── Shared heading ──────────────────────────────────────────────────────── */
+.dd-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin: 0 0 8px;
+}
+
+/* ── 4.1  Reliability Types ──────────────────────────────────────────────── */
+.dd--rel-types {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dd-rel-types-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.dd-rel-type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 10px 8px;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid;
+  border-radius: var(--radius-sm);
+}
+
+.dd-rel-type-icon {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.dd-rel-type-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dd-rel-type-sub {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+
+/* ── 4.2  Kappa Overview ─────────────────────────────────────────────────── */
+.dd--kappa-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dd-kappa-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.dd-kappa-step-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-kappa-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  background: var(--color-primary-dim);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.dd-kappa-step-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dd-kappa-step-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.dd-kappa-step-sub {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono, monospace);
+}
+
+.dd-kappa-arrow {
+  font-size: 1rem;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  transform: rotate(90deg);
+  display: inline-block;
+}
+
+/* ── 4.2.x  Crosstab Table ───────────────────────────────────────────────── */
+.dd--crosstab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.dd-ct-tbl {
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  width: 100%;
+  max-width: 260px;
+}
+
+.dd-ct-tbl th, .dd-ct-tbl td {
+  padding: 5px 8px;
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.dd-ct-blank { background: transparent; border: none; }
+
+.dd-ct-header {
+  background: var(--color-primary-dim);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.72rem;
+}
+
+.dd-ct-row-head {
+  background: var(--color-primary-dim);
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-align: left;
+  padding-left: 6px;
+}
+
+.dd-ct-col-head {
+  background: var(--color-surface);
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.72rem;
+}
+
+.dd-ct-cell { background: var(--color-surface-card); color: var(--color-text); font-weight: 500; }
+
+.dd-ct-agree { background: #d5f5e3 !important; font-weight: 700 !important; color: #1e8449; }
+
+.dd-ct-marg {
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+
+.dd-ct-marg-hi { background: #fef9e7 !important; color: #b7950b !important; }
+
+.dd-ct-marg-head {
+  background: var(--color-surface);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+}
+
+.dd-ct-total {
+  background: var(--color-primary-dim);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.dd-ct-tag {
+  font-size: 0.62rem;
+  color: inherit;
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+.dd-ct-formula {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  padding: 6px 10px;
+  background: #d5f5e3;
+  border-radius: var(--radius-sm);
+  border: 1px solid #a9dfbf;
+  color: #1e8449;
+  flex-wrap: wrap;
+}
+
+.dd-ct-formula--pe {
+  background: #fef9e7;
+  border-color: #f9e79f;
+  color: #b7950b;
+}
+
+/* ── 4.2.4  Kappa Scale ──────────────────────────────────────────────────── */
+.dd--kappa-scale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-kappa-svg {
+  width: 100%;
+  max-width: 265px;
+}
+
+/* ── 4.3  CV Diagram ─────────────────────────────────────────────────────── */
+.dd--cv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-cv-svg {
+  width: 100%;
+  max-width: 260px;
+}
+
+/* ── 4.4  SEM Diagram ────────────────────────────────────────────────────── */
+.dd--sem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-sem-svg {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ── 4.5  MDD Diagram ────────────────────────────────────────────────────── */
+.dd--mdd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-mdd-svg {
+  width: 100%;
+  max-width: 290px;
+}

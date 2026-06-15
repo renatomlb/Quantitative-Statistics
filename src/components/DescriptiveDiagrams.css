@@ -1,0 +1,885 @@
+/* ── 2.1  Central Tendency dot-plot ─────────────────────────────────────── */
+/*
+  Vertical layout of the 90px track (top → bottom):
+    0–14px  : mean label
+   14–50px  : mean marker line
+   34–45px  : dots (centred at 39px)
+   50–52px  : axis
+   52–62px  : median marker line
+   63–75px  : median label
+   76–90px  : axis ticks
+*/
+.ctd {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ctd-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ctd-panel__title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+}
+
+.ctd-track {
+  position: relative;
+  height: 90px;
+  margin: 0 8px;
+}
+
+/* Axis sits at top: 50px */
+.ctd-axis-line {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-border);
+}
+
+/* Dots centred vertically at 39px */
+.ctd-dot {
+  position: absolute;
+  top: 34px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  transform: translateX(-50%);
+}
+
+.ctd-dot--outlier {
+  background: #e84855;
+  width: 13px;
+  height: 13px;
+  top: 33px;
+}
+
+/* Mean label — top zone */
+.ctd-mean-label {
+  position: absolute;
+  top: 2px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: #2e86ab;
+}
+
+/* Mean line — descends from label zone to axis */
+.ctd-mean-line {
+  position: absolute;
+  top: 14px;
+  width: 2px;
+  height: 36px;   /* reaches top: 50px (the axis) */
+  background: #2e86ab;
+  transform: translateX(-50%);
+}
+
+/* Median line — descends from axis downward */
+.ctd-median-line {
+  position: absolute;
+  top: 52px;
+  width: 2px;
+  height: 10px;
+  background: #f18f01;
+  transform: translateX(-50%);
+}
+
+/* Median label — below axis zone */
+.ctd-median-label {
+  position: absolute;
+  top: 63px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: #c97000;
+}
+
+/* Axis ticks — bottom zone */
+.ctd-ticks {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  right: 0;
+}
+
+.ctd-ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  color: var(--color-text-muted);
+}
+
+/* Verdict strip */
+.ctd-verdict {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.ctd-verdict--same { background: rgba(59,178,115,0.12); color: #1e7a4a; }
+.ctd-verdict--diff { background: rgba(232,72,85,0.10);  color: #a8202a; }
+
+/* Legend */
+.ctd-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+}
+
+.ctd-legend__item--mean    { color: #2e86ab; font-weight: 700; }
+.ctd-legend__item--median  { color: #c97000; font-weight: 700; }
+.ctd-legend__item--outlier { color: #e84855; font-weight: 700; }
+
+/* ── 2.3  Data Presentation — Table or Graph? ────────────────────────────── */
+.dpd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  font-size: 0.77rem;
+}
+.dpd-head {
+  padding: 8px 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.dpd-head--graph { background: rgba(46,134,171,0.14); color: #1a5276; }
+.dpd-head--table { background: rgba(59,178,115,0.14); color: #145a32; }
+.dpd-cell {
+  padding: 7px 10px;
+  line-height: 1.45;
+}
+.dpd-cell--graph { background: rgba(46,134,171,0.05); }
+.dpd-cell--table { background: rgba(59,178,115,0.05); }
+
+/* ── 2.3.1  Graphs papers — annotated figure key ─────────────────────────── */
+.gpd-key {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+.gpd-key-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.gpd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* ── 2.3.2  Tables — annotated anatomy ───────────────────────────────────── */
+.tbd-anatomy {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  font-size: 0.75rem;
+}
+.tbd-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 10px;
+  border-top: 1px solid var(--color-border);
+}
+.tbd-row:first-child { border-top: none; }
+.tbd-tag {
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tbd-content { flex: 1; }
+.tbd-row--number { background: rgba(46,134,171,0.07); }
+.tbd-row--title  { background: rgba(59,178,115,0.06); }
+.tbd-row--header { background: rgba(241,143,1,0.07); font-weight: 600; }
+.tbd-row--data   { background: var(--color-surface-card); }
+.tbd-row--note   { background: rgba(100,116,139,0.05); color: var(--color-text-muted); font-size: 0.72rem; }
+.tbd-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 0.6fr;
+  gap: 4px;
+}
+.tbd-data-rows { display: flex; flex-direction: column; gap: 3px; }
+.tbd-data-row  { display: grid; grid-template-columns: 2fr 1fr 1fr 0.6fr; gap: 4px; }
+.tbd-stub-cell { font-weight: 600; color: var(--color-primary); }
+.tbd-key {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+}
+.tbd-key-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.tbd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* ── Shared base ─────────────────────────────────────────────────────────── */
+.dd {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.dd-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.dd-subheading {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.dd-caption {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-top: 10px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.dd-axis-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ── 2.1.3  Variance ─────────────────────────────────────────────────────── */
+.dd--variance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.var-table {
+  width: 100%;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  font-size: 0.75rem;
+}
+
+.var-table__head,
+.var-table__row,
+.var-table__footer {
+  display: grid;
+  grid-template-columns: 56px 1fr 1fr 1fr;
+}
+
+.var-table__head span,
+.var-table__row span,
+.var-table__footer span {
+  padding: 6px 8px;
+  border-left: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.var-table__head span:first-child,
+.var-table__row span:first-child,
+.var-table__footer span:first-child {
+  border-left: none;
+}
+
+.var-table__head {
+  background: rgba(26, 58, 92, 0.08);
+  font-weight: 700;
+  font-size: 0.71rem;
+  color: var(--color-primary);
+}
+
+.var-table__row {
+  border-top: 1px solid var(--color-border);
+}
+
+.var-table__row:nth-child(even) {
+  background: rgba(46, 134, 171, 0.04);
+}
+
+.var-table__patient { font-weight: 600; color: var(--color-accent); }
+.var-dev--pos       { color: #1e8449; font-weight: 600; }
+.var-dev--neg       { color: #c0392b; font-weight: 600; }
+.var-sq             { color: #7d6608; font-weight: 600; }
+
+.var-table__footer {
+  border-top: 2px solid var(--color-border);
+  background: rgba(240, 165, 0, 0.07);
+}
+
+.var-table__sigma { font-weight: 700; color: #7d6608; }
+
+/* ── 2.1.4  Standard Deviation ───────────────────────────────────────────── */
+.dd--sd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dd-sd-svg {
+  width: 100%;
+  max-width: 280px;
+  display: block;
+}
+
+/* ── 2.1.5  Standard Error ───────────────────────────────────────────────── */
+.dd--sem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.sem-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.sem-card {
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sem-card--sd  { background: rgba(46, 134, 171, 0.07);  border: 1.5px solid #2471a3; }
+.sem-card--sem { background: rgba(30, 132, 73, 0.07);   border: 1.5px solid #1e8449; }
+
+.sem-card__title {
+  font-size: 0.77rem;
+  font-weight: 700;
+}
+.sem-card--sd  .sem-card__title { color: #1a5276; }
+.sem-card--sem .sem-card__title { color: #145a32; }
+
+.sem-card__formula { font-size: 0.82rem; text-align: center; }
+
+.sem-card__what { font-size: 0.73rem; font-weight: 600; }
+.sem-card--sd  .sem-card__what { color: #2471a3; }
+.sem-card--sem .sem-card__what { color: #1e8449; }
+
+.sem-card__desc {
+  font-size: 0.71rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.sem-card__rule {
+  font-size: 0.69rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+  padding-top: 4px;
+  margin-top: 2px;
+}
+
+/* ── 2.1.1  Mean ─────────────────────────────────────────────────────────── */
+.dd--mean {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dd-value-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dd-value-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: rgba(46, 134, 171, 0.08);
+  border: 1.5px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  font-size: 0.72rem;
+  color: var(--color-accent);
+  min-width: 36px;
+}
+
+.dd-value-box__num {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-primary);
+}
+
+.dd-formula-block {
+  width: 100%;
+  text-align: center;
+  background: rgba(26, 58, 92, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+.dd-mean-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.dd-mean-chip {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 99px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dd-mean-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dd-symbol-key {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top: 1px solid var(--color-border);
+  padding-top: 8px;
+  width: 100%;
+}
+
+.dd-symbol-key span {
+  font-size: 0.71rem;
+  color: var(--color-text-muted);
+}
+
+/* ── 2.1.2  Median ───────────────────────────────────────────────────────── */
+.dd--median {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dd-ordered-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dd-ordered-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 7px;
+  min-width: 34px;
+  background: var(--color-surface-card);
+}
+
+.dd-ordered-box--median {
+  border-color: #e84855;
+  background: rgba(232, 72, 85, 0.08);
+}
+
+.dd-ordered-pos {
+  font-size: 0.62rem;
+  color: var(--color-text-muted);
+}
+
+.dd-ordered-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.dd-ordered-box--median .dd-ordered-val {
+  color: #e84855;
+}
+
+.dd-median-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e84855;
+}
+
+.dd-median-arrow__line {
+  width: 2px;
+  height: 14px;
+  background: #e84855;
+}
+
+.dd-median-arrow__label {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+/* ── 2.2  Graph Selector ─────────────────────────────────────────────────── */
+.dd--graph-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.dd-graph-card {
+  border: 1.5px solid var(--color-border);
+  border-top-width: 3px;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  background: var(--color-surface-card);
+}
+
+.dd-graph-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.dd-graph-card__name {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.dd-graph-card__when {
+  font-size: 0.71rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* ── 2.2.1  Bar Chart ────────────────────────────────────────────────────── */
+.dd--bar-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 130px;
+  padding-bottom: 2px;
+  margin-top: 14px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.dd-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+}
+
+.dd-bar-count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.dd-bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
+}
+
+.dd-bar-label {
+  font-size: 0.67rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ── 2.2.2  Pie Chart ────────────────────────────────────────────────────── */
+.dd--pie-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dd-pie-wrap {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dd-pie {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dd-pie-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dd-pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+}
+
+.dd-pie-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.dd-pie-pct {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-left: auto;
+  padding-left: 8px;
+}
+
+/* ── 2.2.3  Histogram ────────────────────────────────────────────────────── */
+.dd--histogram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-hist-svg {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ── 2.2.3.1  Normal Distribution ───────────────────────────────────────── */
+.dd--normal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-normal-svg {
+  width: 100%;
+  max-width: 320px;
+}
+
+.dd-normal-rule {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.dd-rule-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.dd-rule-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── 2.2.3.2  Central Limit Theorem ─────────────────────────────────────── */
+.dd--clt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-clt-svg {
+  width: 100%;
+  max-width: 300px;
+}
+
+.dd-clt-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+/* ── 2.2.3.3  Confidence Intervals ──────────────────────────────────────── */
+.dd--ci {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-ci-svg {
+  width: 100%;
+  max-width: 310px;
+}
+
+/* ── 2.2.4  Line Graph ───────────────────────────────────────────────────── */
+.dd--line-graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-line-svg {
+  width: 100%;
+  max-width: 290px;
+  overflow: visible;
+}
+
+/* ── 2.2.5  Scatter Plot ─────────────────────────────────────────────────── */
+.dd--scatter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-scatter-svg {
+  width: 100%;
+  max-width: 270px;
+  overflow: visible;
+}
+
+/* ── 2.2.6  Boxplot ──────────────────────────────────────────────────────── */
+.dd--boxplot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dd-boxplot-svg {
+  width: 100%;
+  max-width: 255px;
+  overflow: visible;
+}
+
+/* ── 2.4  Outliers ───────────────────────────────────────────────────────── */
+.dd--outliers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-fence-calc {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  background: rgba(26, 58, 92, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.77rem;
+  color: var(--color-text-muted);
+}
+
+.dd-fence-flag {
+  font-weight: 600;
+  color: #e84855;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .dd--graph-selector {
+    grid-template-columns: 1fr;
+  }
+  .dd-pie-wrap {
+    flex-direction: column;
+  }
+}

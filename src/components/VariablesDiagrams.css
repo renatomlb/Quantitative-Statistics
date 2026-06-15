@@ -1,0 +1,542 @@
+/* ── Shared diagram base ─────────────────────────────────────────────────── */
+.vd {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.vd-caption {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.vd-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  margin-bottom: 14px;
+}
+
+/* ── 1.0  Population / Sample ───────────────────────────────────────────── */
+.vd--pop-sample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vd-pop {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border: 2px solid var(--color-primary);
+  border-radius: 16px;
+  padding: 14px 16px 16px;
+  text-align: center;
+  background: rgba(26, 58, 92, 0.04);
+}
+
+.vd-pop__label {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--color-primary);
+}
+
+.vd-pop__sub {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin: 2px 0 10px;
+}
+
+.vd-sample {
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  padding: 10px 12px 12px;
+  background: rgba(46, 134, 171, 0.07);
+  text-align: center;
+}
+
+.vd-sample__label {
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--color-accent);
+}
+
+.vd-sample__sub {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  margin: 2px 0 10px;
+}
+
+.vd-obs-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.vd-obs {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* KaTeX output inside circles inherits color and scales with font-size */
+.vd-obs .katex { color: inherit; }
+
+/* ── 1.1  Qualitative ───────────────────────────────────────────────────── */
+.vd--qualitative {
+  text-align: center;
+}
+
+.vd-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.vd-pill {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 99px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+.vd-no-order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  width: fit-content;
+  margin: 0 auto 8px;
+}
+
+.vd-no-order__icon {
+  font-size: 1.1rem;
+}
+
+/* ── 1.2  Quantitative ──────────────────────────────────────────────────── */
+.vd--quantitative {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.vd-quant-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 14px 0;
+}
+
+.vd-quant-row {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.vd-quant-row__label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.82rem;
+}
+
+.vd-quant-row__label strong {
+  color: var(--color-primary);
+}
+.vd-quant-row__label span {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.vd-quant-row__example {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Discrete dots */
+.vd-discrete-line {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.vd-discrete-line::before {
+  content: "";
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-border);
+}
+
+.vd-discrete-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 4px;
+}
+
+.vd-discrete-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  z-index: 1;
+}
+
+.vd-discrete-point span {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}
+
+/* Continuous bar */
+.vd-continuous-line {
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.vd-continuous-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-primary) 100%
+  );
+}
+
+.vd-continuous-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.vd-continuous-ticks span {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}
+
+/* ── 1.3  Types of Scale tree ───────────────────────────────────────────── */
+.vd--scale-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.vd-tree-root {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+}
+
+.vd-tree-branches {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.vd-tree-branches::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.vd-tree-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 140px;
+}
+
+.vd-tree-connector {
+  width: 2px;
+  height: 16px;
+  background: var(--color-border);
+}
+
+.vd-tree-node {
+  border: 2px solid;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  text-align: center;
+  width: 100%;
+  font-size: 0.78rem;
+}
+
+.vd-tree-node strong {
+  display: block;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.vd-tree-node p {
+  margin: 2px 0;
+  color: var(--color-text-muted);
+}
+
+.vd-tree-node__example {
+  font-size: 0.72rem !important;
+  font-style: italic;
+}
+
+/* ── 1.3.1  Nominal grid ────────────────────────────────────────────────── */
+.vd--nominal {
+  text-align: center;
+}
+
+.vd-nominal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.vd-nominal-cell {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-surface-card);
+}
+
+.vd-nominal-cell__label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+}
+
+.vd-nominal-cell__code {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}
+
+.vd-nominal-note {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ── 1.3.2  Ordinal row ─────────────────────────────────────────────────── */
+.vd--ordinal {
+  text-align: center;
+}
+
+.vd-ordinal-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 14px;
+}
+
+.vd-ordinal-item {
+  display: flex;
+  align-items: center;
+}
+
+.vd-ordinal-box {
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.vd-ordinal-gap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.vd-ordinal-arrow {
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.vd-ordinal-question {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e84855;
+  line-height: 1;
+}
+
+.vd-ordinal-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  flex-wrap: wrap;
+}
+
+.vd-ordinal-legend__gap {
+  color: #e84855;
+}
+
+/* ── 1.3.3  Scale compare panels ────────────────────────────────────────── */
+.vd--scale-compare {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.vd-scale-panel {
+  border: 2px solid;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vd-scale-panel--interval {
+  border-color: #f18f01;
+}
+.vd-scale-panel--ratio {
+  border-color: #3bb273;
+}
+
+.vd-scale-panel__header {
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.vd-scale-panel--interval .vd-scale-panel__header {
+  color: #f18f01;
+}
+.vd-scale-panel--ratio .vd-scale-panel__header {
+  color: #3bb273;
+}
+
+.vd-scale-panel__example {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.vd-scale-axis {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 6px;
+}
+
+.vd-scale-tick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.vd-scale-tick__mark {
+  width: 2px;
+  height: 8px;
+  background: var(--color-text-muted);
+}
+
+.vd-scale-tick span {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+}
+
+.vd-scale-zero {
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.vd-scale-zero--false {
+  background: rgba(241, 143, 1, 0.12);
+  color: #b86d00;
+}
+.vd-scale-zero--true {
+  background: rgba(59, 178, 115, 0.12);
+  color: #1e7a4a;
+}
+
+.vd-scale-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.vd-fact {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.vd-fact--yes {
+  color: #1e7a4a;
+}
+.vd-fact--no {
+  color: #e84855;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .vd-quant-row {
+    grid-template-columns: 1fr;
+  }
+  .vd-tree-branches {
+    flex-direction: column;
+    align-items: center;
+  }
+}

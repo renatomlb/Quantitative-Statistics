@@ -1,0 +1,53 @@
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --color-primary:        #1a3a5c;
+  --color-primary-light:  #2c5f8a;
+  --color-primary-dim:    #e8eef5;
+  --color-accent:         #2e86ab;
+  --color-accent-hover:   #236a8a;
+  --color-surface:        #f4f6fa;
+  --color-surface-card:   #ffffff;
+  --color-border:         #d0daea;
+  --color-text:           #1c2b3a;
+  --color-text-muted:     #5a6e82;
+
+  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm:  6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 2px 8px rgba(26,58,92,0.10);
+  --shadow-nav:  0 2px 12px rgba(26,58,92,0.15);
+
+  --nav-height: 64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-surface);
+  color: var(--color-text);
+  line-height: 1.65;
+}
+
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-primary);
+}
+
+p { margin-bottom: 0.75rem; }
+p:last-child { margin-bottom: 0; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+}
