@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import SectionPage from './components/SectionPage';
 import BibliographyPage from './components/BibliographyPage';
 import Footer from './components/Footer';
+import FeedbackWidget from './components/FeedbackWidget';
 import { SECTIONS } from './data/sections';
 import './App.css';
 
@@ -40,6 +41,7 @@ export default function App() {
         )}
       </div>
       <Footer />
+      <FeedbackWidget showExport={false} />
     </>
   );
 }
