@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { VARIABLES_CONTENT } from '../data/variablesContent';
 import { DESCRIPTIVE_CONTENT } from '../data/descriptiveContent';
 import { CORRELATIONAL_CONTENT } from '../data/correlationalContent';
@@ -40,7 +40,7 @@ const KATEX_OPTS = {
 };
 
 export default function SectionPage({ section, onBack }) {
-  const flat = flattenSubsections(section.subsections);
+  const flat = useMemo(() => flattenSubsections(section.subsections), [section.subsections]);
   const [activeSubId, setActiveSubId] = useState(flat[0]?.id ?? null);
   const activeSub = flat.find((s) => s.id === activeSubId);
 
@@ -76,7 +76,7 @@ export default function SectionPage({ section, onBack }) {
                   <button
                     className={`sidebar-link sidebar-link--depth-${sub.depth}${activeSubId === sub.id ? ' sidebar-link--active' : ''}`}
                     onClick={() => setActiveSubId(sub.id)}
-                    aria-current={activeSubId === sub.id ? 'true' : undefined}
+                    aria-current={activeSubId === sub.id ? 'page' : undefined}
                   >
                     <span className="sidebar-link__num">{sub.number}</span>
                     {sub.title}

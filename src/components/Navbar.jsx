@@ -68,7 +68,11 @@ export default function Navbar({ activeSection, onNavigate }) {
       {menuOpen && (
         <ul id="mobile-menu" className="navbar__mobile" role="list">
           <li>
-            <button className="navbar__mobile-link" onClick={() => handleNav(null)}>
+            <button
+              className={`navbar__mobile-link${activeSection === null ? ' navbar__mobile-link--active' : ''}`}
+              onClick={() => handleNav(null)}
+              aria-current={activeSection === null ? 'page' : undefined}
+            >
               Home
             </button>
           </li>
@@ -77,6 +81,7 @@ export default function Navbar({ activeSection, onNavigate }) {
               <button
                 className={`navbar__mobile-link${activeSection === s.id ? ' navbar__mobile-link--active' : ''}`}
                 onClick={() => handleNav(s.id)}
+                aria-current={activeSection === s.id ? 'page' : undefined}
               >
                 {s.title}
               </button>

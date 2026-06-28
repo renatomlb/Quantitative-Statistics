@@ -8,12 +8,9 @@ export default function Footer() {
         <p className="footer__text">
           LUNEX University of Applied Sciences&nbsp;&mdash;&nbsp;Content created to be used
           internally&nbsp;&mdash;&nbsp;
-          <a
-            // href="mailto:rbaptista@lunex.lu"
-            // className="footer__email"
-          >
+          <span className="footer__email">
             rbaptista (at) lunex lu
-          </a>
+          </span>
         </p>
       </div>
     </footer>

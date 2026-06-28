@@ -67,6 +67,14 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 40px;
+  list-style: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+/* li is invisible to layout — button becomes the grid item directly */
+.hero__cards li {
+  display: contents;
 }
 
 .hero__card {

@@ -24,22 +24,22 @@ export default function Hero({ onNavigate }) {
         </p>
 
         {/* Section cards grid */}
-        <div className="hero__cards" role="list" aria-label="Course sections">
+        <ul className="hero__cards" aria-label="Course sections">
           {SECTIONS.filter((s) => s.id !== 'bibliography').map((s) => (
-            <button
-              key={s.id}
-              className="hero__card"
-              role="listitem"
-              onClick={() => onNavigate(s.id)}
-              aria-label={`Go to ${s.title}`}
-            >
-              <span className="hero__card-icon" aria-hidden="true">{s.icon}</span>
-              <span className="hero__card-title">{s.title}</span>
-              <span className="hero__card-desc">{s.description}</span>
-              <span className="hero__card-arrow" aria-hidden="true">→</span>
-            </button>
+            <li key={s.id}>
+              <button
+                className="hero__card"
+                onClick={() => onNavigate(s.id)}
+                aria-label={`Go to ${s.title}`}
+              >
+                <span className="hero__card-icon" aria-hidden="true">{s.icon}</span>
+                <span className="hero__card-title">{s.title}</span>
+                <span className="hero__card-desc">{s.description}</span>
+                <span className="hero__card-arrow" aria-hidden="true">→</span>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Exam note */}
         <p className="hero__general-note">

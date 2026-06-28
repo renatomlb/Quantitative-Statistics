@@ -51,22 +51,6 @@
   margin-bottom: 18px;
 }
 
-/* LO tags */
-.section-page__lo-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-
-.lo-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 99px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 0.04em;
-  cursor: help;
-}
-
 /* ── Body layout ──────────────────────────────────────────────────────────── */
 .section-page__body {
   max-width: 1200px;
@@ -194,9 +178,6 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
 }
-
-/* ── Quiz row (full width) ────────────────────────────────────────────────── */
-.content-quiz-row { }
 
 /* ── Definition cards ─────────────────────────────────────────────────────── */
 .def-cards { display: flex; flex-direction: column; gap: 10px; }

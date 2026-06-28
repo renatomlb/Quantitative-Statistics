@@ -274,5 +274,6 @@ export const LO_DESCRIPTIONS = {
   "3e": "Analyse, summarise and present data with descriptive statistics",
   "3f": "Perform inferential and correlational statistical analysis",
   "3g": "Perform basic coding of qualitative data",
+  "3h": "Critically evaluate statistical evidence in physiotherapy literature",
   "3i": "Create databases in Microsoft Excel",
 };

@@ -178,7 +178,7 @@ export function KappaScaleDiagram() {
   return (
     <div className="dd--kappa-scale">
       <p className="dd-heading">κ Interpretation Scale</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-kappa-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-kappa-svg" role="img" aria-label="κ interpretation scale: None (below 0.21), Minimal (0.21–0.40), Weak (0.40–0.60), Moderate (0.60–0.80), Strong (0.80–0.90), Almost Perfect (0.90–1.0)">
         {/* Main colour zones (k = 0 to 1) */}
         {zones.map((z) => {
           const y1 = toY(z.to), y2 = toY(z.from);
@@ -249,7 +249,7 @@ export function CVDiagram() {
   return (
     <div className="dd--cv">
       <p className="dd-heading">CV = (SD / Mean) × 100</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-cv-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-cv-svg" role="img" aria-label="Number line comparing low CV of 9% versus high CV of 59% across two measurement scenarios">
         {/* x-axis */}
         <line x1={xL} y1={axY} x2={xR} y2={axY} stroke="#888" strokeWidth={1} />
         {ticks.map((t) => (
@@ -304,7 +304,7 @@ export function SEMDiagram() {
   return (
     <div className="dd--sem">
       <p className="dd-heading">SEM = SD × √(1 − ICC)</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-sem-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-sem-svg" role="img" aria-label="Horizontal band showing SEM range around the true score with observed measurement dots within plus or minus SEM">
         {/* SEM band */}
         <rect x={trueScore - semPx} y={cy - barH / 2} width={semPx * 2} height={barH} fill="#aed6f1" opacity={0.7} rx={4} />
         <text x={cx} y={cy + 5} textAnchor="middle" fontSize={10} fill="#1a5276" fontWeight="600">± SEM range</text>
@@ -351,7 +351,7 @@ export function MDDDiagram() {
   return (
     <div className="dd--mdd">
       <p className="dd-heading">MDD Threshold Interpretation</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-mdd-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-mdd-svg" role="img" aria-label="MDD threshold diagram with zones: real change above MDD95, possibly real between SEM and MDD, and random measurement error within SEM">
         <defs>
           <marker id="arr-mdd" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
             <path d="M0,0 L0,6 L6,3 z" fill="#555" />

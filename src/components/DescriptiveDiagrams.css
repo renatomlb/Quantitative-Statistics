@@ -116,7 +116,7 @@
 .ctd-ticks span {
   position: absolute;
   transform: translateX(-50%);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   color: var(--color-text-muted);
 }
 
@@ -212,7 +212,7 @@
 .tbd-row:first-child { border-top: none; }
 .tbd-tag {
   display: inline-block;
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #fff;
   padding: 2px 5px;

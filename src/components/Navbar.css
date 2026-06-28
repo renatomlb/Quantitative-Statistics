@@ -80,23 +80,6 @@
   white-space: nowrap;
 }
 
-/* CANVAS link — left-aligned with BPTY12 above */
-.navbar__canvas-link {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: color 0.15s;
-  white-space: nowrap;
-}
-
-.navbar__canvas-link:hover {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-}
-
 /* ── Desktop nav links ───────────────────────────────────────────────────── */
 .navbar__links {
   display: flex;
@@ -201,14 +184,6 @@
 .navbar__mobile-link--active {
   color: #fff;
   font-weight: 600;
-}
-
-.navbar__mobile-canvas {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 8px;
-  padding-top: 14px;
 }
 
 @media (max-width: 900px) {

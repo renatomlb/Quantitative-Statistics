@@ -46,7 +46,7 @@ export function CorrDefinitionDiagram() {
               <span className="dd-corr-panel-label">{p.label}</span>
               <span className="dd-corr-panel-r" style={{ color: p.color }}>{p.r}</span>
             </div>
-            <svg viewBox={`0 0 ${W} ${H}`} className="dd-corr-svg">
+            <svg viewBox={`0 0 ${W} ${H}`} className="dd-corr-svg" role="img" aria-label={`${p.label} scatter plot`}>
               <line x1={pad} y1={H - pad} x2={W - pad} y2={H - pad} stroke="#ccc" strokeWidth="1" />
               <line x1={pad} y1={pad} x2={pad} y2={H - pad} stroke="#ccc" strokeWidth="1" />
               {p.points.map(([x, y], i) => (
@@ -87,7 +87,7 @@ export function RCoefficientDiagram() {
 
   return (
     <div className="dd--r-coeff">
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-r-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-r-svg" role="img" aria-label="r-coefficient scale from −1 (perfect negative) to +1 (perfect positive) with coloured strength zones">
 
         {/* coloured bar zones */}
         {zones.map((z) => (
@@ -197,7 +197,7 @@ export function CorrMathDiagram() {
   return (
     <div className="dd--corr-math">
       <p className="dd-heading">Height vs Weight — r² = 0.79, r = 0.89</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-corr-math-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-corr-math-svg" role="img" aria-label="Scatter plot of height vs weight for 23 participants with least-squares trendline, r² = 0.79, r = 0.89">
         {/* grid */}
         {xTicks.map((h) => (
           <line key={h} x1={toX(h)} y1={yTop} x2={toX(h)} y2={yBase} stroke="#e8e8e8" strokeWidth="0.8" />
@@ -258,7 +258,7 @@ export function CorrVsCausationDiagram() {
   return (
     <div className="dd--corr-cause">
       <p className="dd-heading">Correlation ≠ Causation</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-corr-cause-svg">
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-corr-cause-svg" role="img" aria-label="Diagram showing a confounding variable independently causing both Variable A and Variable B, creating a spurious correlation between them">
 
         {/* Confounder box — top centre */}
         <rect x={95} y={8} width={90} height={28} rx={5} fill="#fff3cd" stroke="#f0ad4e" strokeWidth="1.5" />

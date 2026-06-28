@@ -9,7 +9,7 @@ const QUESTIONS = [
 ];
 
 const STORAGE_KEY = 'qs_feedback_responses';
-const BLUE = '#2563eb';
+const BLUE = '#2e86ab';
 const EMPTY_ANSWERS = { clarity: null, usefulness: null, usability: null, difficulty: null, satisfaction: null };
 
 function exportCSV(responses) {
@@ -47,9 +47,9 @@ function BtnStyle(bg) {
 }
 
 export default function FeedbackWidget({ showExport = false }) {
-  const [open, setOpen]         = useState(false);
-  const [answers, setAnswers]   = useState({ ...EMPTY_ANSWERS });
-  const [comments, setComments] = useState('');
+  const [open, setOpen]           = useState(false);
+  const [answers, setAnswers]     = useState({ ...EMPTY_ANSWERS });
+  const [comments, setComments]   = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [showError, setShowError] = useState(false);
 
@@ -136,7 +136,7 @@ export default function FeedbackWidget({ showExport = false }) {
           onClick={handleExport}
           role="button"
           tabIndex={0}
-          onKeyDown={e => e.key === 'Enter' && handleExport()}
+          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleExport()}
           style={{
             position: 'fixed',
             bottom: 24,
@@ -163,7 +163,7 @@ export default function FeedbackWidget({ showExport = false }) {
         onClick={handleOpen}
         role="button"
         tabIndex={0}
-        onKeyDown={e => e.key === 'Enter' && handleOpen()}
+        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleOpen()}
         style={{
           position: 'fixed',
           bottom: 24,
@@ -215,25 +215,30 @@ export default function FeedbackWidget({ showExport = false }) {
               overflowY: 'auto',
               fontFamily: 'system-ui, -apple-system, sans-serif',
               outline: 'none',
-            }}>
+            }}
+          >
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '24px 0' }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
-                <h2 style={{ margin: '0 0 8px', color: '#1e3a5f', fontSize: 20, fontWeight: 700 }}>
+                <h2 style={{ margin: '0 0 8px', color: '#1a3a5c', fontSize: 20, fontWeight: 700 }}>
                   Thank you for your feedback!
                 </h2>
                 <p style={{ color: '#555', margin: '0 0 24px', fontSize: 14, lineHeight: 1.5 }}>
                   Your response has been recorded anonymously.
                 </p>
-                <div onClick={handleClose} role="button" tabIndex={0}
-                  onKeyDown={e => e.key === 'Enter' && handleClose()}
-                  style={BtnStyle(BLUE)}>
+                <div
+                  onClick={handleClose}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleClose()}
+                  style={BtnStyle(BLUE)}
+                >
                   Close
                 </div>
               </div>
             ) : (
               <>
-                <h2 id="feedback-modal-title" style={{ margin: '0 0 6px', color: '#1e3a5f', fontSize: 18, fontWeight: 700 }}>
+                <h2 id="feedback-modal-title" style={{ margin: '0 0 6px', color: '#1a3a5c', fontSize: 18, fontWeight: 700 }}>
                   Resource Feedback
                 </h2>
                 <p style={{ margin: '0 0 22px', color: '#555', fontSize: 13, lineHeight: 1.5 }}>
@@ -242,7 +247,7 @@ export default function FeedbackWidget({ showExport = false }) {
 
                 {QUESTIONS.map(({ key, label }) => (
                   <div key={key} style={{ marginBottom: 22 }}>
-                    <p style={{ margin: '0 0 10px', fontSize: 13.5, fontWeight: 600, color: '#1e3a5f', lineHeight: 1.4 }}>
+                    <p id={`q-label-${key}`} style={{ margin: '0 0 10px', fontSize: 13.5, fontWeight: 600, color: '#1a3a5c', lineHeight: 1.4 }}>
                       {label}
                       {showError && answers[key] === null && (
                         <span style={{ color: '#dc2626', fontWeight: 400, marginLeft: 6, fontSize: 12 }}>
@@ -250,57 +255,59 @@ export default function FeedbackWidget({ showExport = false }) {
                         </span>
                       )}
                     </p>
-                    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                      {[1, 2, 3, 4, 5].map(v => {
-                        const selected = answers[key] === v;
-                        return (
-                          <div
-                            key={v}
-                            onClick={() => handleSelect(key, v)}
-                            role="radio"
-                            aria-checked={selected}
-                            tabIndex={0}
-                            onKeyDown={e => e.key === 'Enter' && handleSelect(key, v)}
-                            style={{
-                              width: 34,
-                              height: 34,
-                              borderRadius: '50%',
-                              border: `2px solid ${BLUE}`,
-                              background: selected ? BLUE : '#fff',
-                              color: selected ? '#fff' : BLUE,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: 13,
-                              fontWeight: 700,
-                              cursor: 'pointer',
-                              userSelect: 'none',
-                              flexShrink: 0,
-                              transition: 'background 0.12s',
-                            }}
-                          >
-                            {v}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      fontSize: 11,
-                      color: '#888',
-                      marginTop: 5,
-                      paddingLeft: 2,
-                      paddingRight: 2,
-                    }}>
-                      <span>Strongly Disagree</span>
-                      <span>Strongly Agree</span>
+                    <div role="radiogroup" aria-labelledby={`q-label-${key}`}>
+                      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                        {[1, 2, 3, 4, 5].map(v => {
+                          const selected = answers[key] === v;
+                          return (
+                            <div
+                              key={v}
+                              onClick={() => handleSelect(key, v)}
+                              role="radio"
+                              aria-checked={selected}
+                              tabIndex={0}
+                              onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSelect(key, v)}
+                              style={{
+                                width: 34,
+                                height: 34,
+                                borderRadius: '50%',
+                                border: `2px solid ${BLUE}`,
+                                background: selected ? BLUE : '#fff',
+                                color: selected ? '#fff' : BLUE,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 13,
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                userSelect: 'none',
+                                flexShrink: 0,
+                                transition: 'background 0.12s',
+                              }}
+                            >
+                              {v}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        fontSize: 11,
+                        color: '#888',
+                        marginTop: 5,
+                        paddingLeft: 2,
+                        paddingRight: 2,
+                      }}>
+                        <span>Strongly Disagree</span>
+                        <span>Strongly Agree</span>
+                      </div>
                     </div>
                   </div>
                 ))}
 
                 <div style={{ marginBottom: 20 }}>
-                  <p style={{ margin: '0 0 8px', fontSize: 13.5, fontWeight: 600, color: '#1e3a5f' }}>
+                  <p style={{ margin: '0 0 8px', fontSize: 13.5, fontWeight: 600, color: '#1a3a5c' }}>
                     Any other comments?{' '}
                     <span style={{ fontWeight: 400, color: '#888' }}>(optional)</span>
                   </p>
@@ -327,18 +334,19 @@ export default function FeedbackWidget({ showExport = false }) {
                   />
                 </div>
 
-                {showError && (
-                  <p style={{ color: '#dc2626', fontSize: 12.5, margin: '-8px 0 14px', fontWeight: 500 }}>
-                    Please answer all 5 questions before submitting.
-                  </p>
-                )}
+                <p
+                  aria-live="polite"
+                  style={{ color: '#dc2626', fontSize: 12.5, margin: '-8px 0 14px', fontWeight: 500, minHeight: '1.5em' }}
+                >
+                  {showError ? 'Please answer all 5 questions before submitting.' : ''}
+                </p>
 
                 <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
                   <div
                     onClick={handleClose}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && handleClose()}
+                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleClose()}
                     style={BtnStyle('#6b7280')}
                   >
                     Cancel
@@ -347,7 +355,7 @@ export default function FeedbackWidget({ showExport = false }) {
                     onClick={handleSubmit}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleSubmit()}
                     style={BtnStyle(BLUE)}
                   >
                     Submit
