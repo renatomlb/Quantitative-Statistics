@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const QUESTIONS = [
   { key: 'clarity',      label: 'The content is clearly explained.' },
@@ -52,6 +52,39 @@ export default function FeedbackWidget({ showExport = false }) {
   const [comments, setComments] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const el = modalRef.current;
+    if (!el) return;
+    el.focus();
+    function trapTab(e) {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        setAnswers({ ...EMPTY_ANSWERS });
+        setComments('');
+        setSubmitted(false);
+        setShowError(false);
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const focusable = Array.from(
+        el.querySelectorAll('[role="button"], [role="radio"], textarea, [tabindex]:not([tabindex="-1"])')
+      ).filter(node => !node.hasAttribute('disabled'));
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+    el.addEventListener('keydown', trapTab);
+    return () => el.removeEventListener('keydown', trapTab);
+  }, [open]);
 
   function handleOpen() {
     setOpen(true);
@@ -165,17 +198,24 @@ export default function FeedbackWidget({ showExport = false }) {
             padding: 16,
           }}
         >
-          <div style={{
-            background: '#fff',
-            borderRadius: 12,
-            boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
-            padding: '28px 32px',
-            width: '100%',
-            maxWidth: 520,
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-          }}>
+          <div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="feedback-modal-title"
+            tabIndex={-1}
+            style={{
+              background: '#fff',
+              borderRadius: 12,
+              boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+              padding: '28px 32px',
+              width: '100%',
+              maxWidth: 520,
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              outline: 'none',
+            }}>
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '24px 0' }}>
                 <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
@@ -193,7 +233,7 @@ export default function FeedbackWidget({ showExport = false }) {
               </div>
             ) : (
               <>
-                <h2 style={{ margin: '0 0 6px', color: '#1e3a5f', fontSize: 18, fontWeight: 700 }}>
+                <h2 id="feedback-modal-title" style={{ margin: '0 0 6px', color: '#1e3a5f', fontSize: 18, fontWeight: 700 }}>
                   Resource Feedback
                 </h2>
                 <p style={{ margin: '0 0 22px', color: '#555', fontSize: 13, lineHeight: 1.5 }}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SectionPage from './components/SectionPage';
@@ -9,12 +9,15 @@ import { SECTIONS } from './data/sections';
 import './App.css';
 
 export default function App() {
-  const [activeSectionId, setActiveSectionId] = useState(null);
+  const reactNavigate = useNavigate();
+  const location = useLocation();
 
+  const match = location.pathname.match(/^\/section\/(.+)$/);
+  const activeSectionId = match ? match[1] : null;
   const activeSection = SECTIONS.find((s) => s.id === activeSectionId) ?? null;
 
   function navigate(id) {
-    setActiveSectionId(id);
+    reactNavigate(id ? `/section/${id}` : '/');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
