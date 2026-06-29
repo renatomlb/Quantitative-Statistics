@@ -114,6 +114,15 @@
   padding-top: 1px;
 }
 
+.sidebar-link__check {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #3bb273;
+}
+
 /* ── Main content column ──────────────────────────────────────────────────── */
 .section-page__content { min-width: 0; }
 

@@ -142,6 +142,53 @@
   transform: translateX(4px);
 }
 
+/* Progress bar inside each section card */
+.hero__card-progress {
+  width: 100%;
+  align-self: stretch;
+  margin-top: 6px;
+}
+
+.hero__card-progress-text {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 4px;
+}
+
+.hero__card-progress-bar {
+  height: 3px;
+  background: var(--color-border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.hero__card-progress-fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 99px;
+  transition: width 0.3s ease;
+}
+
+/* Reset progress link */
+.hero__reset-btn {
+  display: block;
+  margin-top: 12px;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.55;
+  padding: 0;
+  transition: opacity 0.15s;
+}
+
+.hero__reset-btn:hover { opacity: 1; }
+
 /* General note */
 .hero__general-note {
   font-size: 0.82rem;

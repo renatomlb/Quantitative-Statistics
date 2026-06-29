@@ -165,17 +165,24 @@ export function NominalDiagram() {
 
 /* ── 1.3.2  Ordinal — ordered with unknown gaps ─────────────────────────── */
 export function OrdinalDiagram() {
-  const levels = ['None', 'Mild', 'Moderate', 'Severe'];
+  const levels = [
+    { label: 'None',     bg: '#3bb273', fg: '#fff' },
+    { label: 'Mild',     bg: '#f0c040', fg: '#3a2e00' },
+    { label: 'Moderate', bg: '#f07e3a', fg: '#fff' },
+    { label: 'Severe',   bg: '#e84855', fg: '#fff' },
+  ];
   return (
     <div className="vd vd--ordinal">
       <p className="vd-heading">Pain level — ordinal scale</p>
-      <div className="vd-ordinal-row">
-        {levels.map((level, i) => (
-          <div key={level} className="vd-ordinal-item">
-            <div className="vd-ordinal-box">{level}</div>
+      <div className="vd-ordinal-col">
+        {levels.map((lvl, i) => (
+          <div key={lvl.label} className="vd-ordinal-item">
+            <div className="vd-ordinal-box" style={{ background: lvl.bg, color: lvl.fg }}>
+              {lvl.label}
+            </div>
             {i < levels.length - 1 && (
               <div className="vd-ordinal-gap">
-                <div className="vd-ordinal-arrow">→</div>
+                <div className="vd-ordinal-arrow">↓</div>
                 <div className="vd-ordinal-question">?</div>
               </div>
             )}
@@ -183,7 +190,7 @@ export function OrdinalDiagram() {
         ))}
       </div>
       <div className="vd-ordinal-legend">
-        <span>→ Order is meaningful</span>
+        <span>↓ Order is meaningful</span>
         <span className="vd-ordinal-legend__gap">? Gap size between levels is unknown</span>
       </div>
     </div>

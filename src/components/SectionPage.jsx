@@ -39,10 +39,26 @@ const KATEX_OPTS = {
   throwOnError: false,
 };
 
-export default function SectionPage({ section, onBack }) {
+export default function SectionPage({ section, onBack, visited = new Set(), onVisit = () => {} }) {
   const flat = useMemo(() => flattenSubsections(section.subsections), [section.subsections]);
   const [activeSubId, setActiveSubId] = useState(flat[0]?.id ?? null);
   const activeSub = flat.find((s) => s.id === activeSubId);
+
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    const el = bottomRef.current;
+    if (!el || !activeSubId) return;
+    let observer;
+    const timer = setTimeout(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) onVisit(activeSubId); },
+        { threshold: 0 }
+      );
+      observer.observe(el);
+    }, 400);
+    return () => { clearTimeout(timer); observer?.disconnect(); };
+  }, [activeSubId, onVisit]);
 
   useEffect(() => {
     if (typeof window.renderMathInElement === 'function') {
@@ -75,11 +91,14 @@ export default function SectionPage({ section, onBack }) {
                 <li key={sub.id}>
                   <button
                     className={`sidebar-link sidebar-link--depth-${sub.depth}${activeSubId === sub.id ? ' sidebar-link--active' : ''}`}
-                    onClick={() => setActiveSubId(sub.id)}
+                    onClick={() => { setActiveSubId(sub.id); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                     aria-current={activeSubId === sub.id ? 'page' : undefined}
                   >
                     <span className="sidebar-link__num">{sub.number}</span>
-                    {sub.title}
+                    <span style={{ flex: 1 }}>{sub.title}</span>
+                    {visited.has(sub.id) && (
+                      <span className="sidebar-link__check" aria-label="visited">✓</span>
+                    )}
                   </button>
                 </li>
               ))}
@@ -95,6 +114,7 @@ export default function SectionPage({ section, onBack }) {
               sectionId={section.id}
             />
           )}
+          <div ref={bottomRef} aria-hidden="true" />
         </main>
       </div>
     </div>

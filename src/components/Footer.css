@@ -20,14 +20,3 @@
   margin: 0;
   line-height: 1.6;
 }
-
-.footer__email {
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.footer__email:hover {
-  color: var(--color-accent-hover);
-  text-decoration: underline;
-}
