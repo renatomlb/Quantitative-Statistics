@@ -38,6 +38,8 @@ export default function Hero({ onNavigate, visited, onReset }) {
                   className="hero__card"
                   onClick={() => onNavigate(s.id)}
                   aria-label={`Go to ${s.title}`}
+                  data-umami-event="Section Click"
+                  data-umami-event-section={s.title}
                 >
                   <span className="hero__card-icon" aria-hidden="true">{s.icon}</span>
                   <span className="hero__card-title">{s.title}</span>

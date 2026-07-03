@@ -66,7 +66,7 @@ export default function App() {
         )}
       </div>
       <Footer />
-      <FeedbackWidget showExport={false} />
+      <FeedbackWidget />
       <BackToTop />
     </>
   );
