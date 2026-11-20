@@ -1,8 +1,8 @@
 // Full content for Section 4 — Tests of Reliability
 // Primary sources:
 //   Baptista, R. (2026). BPTY12 Statistics Lecture Slides [HLP-SLD], slides 45–56.
-//   Furlan, L. & Sterr, A. (2018). Frontiers in Human Neuroscience, 12, 95. [SRC-P1]
-//   Grönkvist, R., Vixner, L., Äng, B. & Grimby-Ekman, A. (2024). The Journal of Pain, 25(9), 104559. [SRC-P2]
+//   Grönkvist, R., Vixner, L., Äng, B. & Grimby-Ekman, A. (2024). The Journal of Pain, 25(9), 104559. [SRC-P1]
+//   Furlan, L. & Sterr, A. (2018). Frontiers in Human Neuroscience, 12, 95. [SRC-P3]
 
 export const RELIABILITY_CONTENT = {
 
@@ -381,8 +381,8 @@ export const RELIABILITY_CONTENT = {
       intro: 'A clinic uses the Oswestry Disability Index (ODI, 0–100) to track low back pain patients. The instrument has ICC = 0.85 and SD_baseline = 12 points.',
       bullets: [
         'SEM = 12 × √(1 − 0.85) = 12 × √0.15 = 12 × 0.387 ≈ 4.6 points.',
-        'This means that even without any real change in disability, scores can randomly fluctuate by roughly ±4.6 points between sessions.',
-        'A patient who scores 42 at baseline and 46 at follow-up (a 4-point change) has changed by less than 1 SEM — this is likely measurement error, not true improvement.',
+        'This means that even without any real change in disability, repeated scores scatter around the true score: about two-thirds fall within \\(\\pm 1\\) SEM (±4.6 points) and about 95% within \\(\\pm 1.96 \\times SEM\\) (±9 points).',
+        'A patient who scores 42 at baseline and 46 at follow-up has changed by 4 points. A change involves two measurements, so it must be compared with the MDD (≈ 12.8 points, see 4.5), not with the SEM of a single score. Because 4 < 12.8, no conclusion can be drawn as to whether a true change has occurred.',
         'The SEM is reported alongside the ICC to fully characterise instrument reliability for continuous outcomes.',
       ],
     },
@@ -400,11 +400,11 @@ export const RELIABILITY_CONTENT = {
         },
         {
           q: 'How does a higher ICC affect the SEM, and why is this clinically relevant?',
-          a: 'A higher ICC reduces the SEM (SEM = SD × √(1 − ICC)). Higher ICC means more reliable measurements, so less random noise. Clinically, a smaller SEM means that even small observed changes may be considered meaningful — the instrument is more sensitive to real change.',
+          a: 'A higher ICC reduces the SEM (SEM = SD × √(1 − ICC)). Higher ICC means more reliable measurements, so less random noise. Clinically, a smaller SEM gives a smaller MDD, so smaller changes can be detected as real. Whether a real change also matters to the patient is a separate question, answered by the MCID (see 4.5).',
         },
         {
           q: 'A patient\'s score changes by 5 points between sessions. The SEM is 6 points. Can you conclude that a real change occurred?',
-          a: 'No. A 5-point change is less than the SEM (6 points), meaning it falls within the expected range of random fluctuation. To conclude that a real change occurred with 95% confidence, the observed change must exceed the Minimal Detectable Difference (MDD₉₅ ≈ 2.77 × SEM).',
+          a: 'No, and not because 5 is smaller than the SEM. A change involves two measurements, so it must be compared with the MDD, not with the SEM: \\(MDD_{95} = 1.96 \\times \\sqrt{2} \\times 6 \\approx 16.6\\) points. Because 5 < 16.6, no conclusion can be drawn as to whether a true change has occurred. This does not prove that the change is error; it only means the change is not large enough to rule error out.',
         },
       ],
     },
@@ -432,9 +432,11 @@ export const RELIABILITY_CONTENT = {
     plainTerms: [
       'The MDD₉₅ is the minimum change you need to observe before you can conclude — with 95% confidence — that the change is real and not just measurement noise.',
       'It is derived from the SEM: MDD₉₅ = √2 × 1.96 × SEM ≈ 2.77 × SEM. The √2 accounts for the fact that a change score involves two measurement occasions (and thus two independent sources of error); 1.96 is the z-score for 95% confidence.',
-      'Think of the MDD as a threshold. Any observed change smaller than the MDD might be explained by random error alone. Only when the observed change exceeds the MDD can you claim with 95% confidence that something genuinely changed.',
+      'Think of the MDD as a threshold. Any observed change smaller than the MDD might be explained by random error alone. Only when the observed change exceeds the MDD can you claim with 95% confidence that something genuinely changed. For changes smaller than the MDD, no conclusion can be drawn as to whether a true change has occurred.',
       'The MCID takes this one step further: not only must a change be real (exceed MDD), but it must also be large enough to matter subjectively to the patient. The MCID is determined by comparing score changes against patients\' own ratings of whether their health improved.',
-      'Hierarchy: random noise → SEM (expected error magnitude) → MDD (threshold for real change, ≈2.77 × SEM) → MCID (threshold for patient-meaningful change). A change can exceed MDD but still be below MCID — real, but not important enough to matter to the patient.',
+      'Methods of estimating the MCID are anchor-based or distribution-based. Anchor-based methods use an external rating from the patient (the anchor), e.g., “Compared with one year ago, how is your health now?”. In the average change method, the MCID is the mean change of the patients who rated themselves as “slightly improved”.',
+      'The MDD and the SEM always go together: the MDD is about 2.77 × SEM, so it is always larger than the SEM. The MCID is different: it comes from the patients, not from the instrument, so it can be larger or smaller than the MDD.',
+      'Real example (8,854 chronic-pain patients): for the SF-36 physical component summary, SEM ≈ 3.2, MDC ≈ 9.0 and MCID ≈ 2.6–4.7 points. Here the MCID is smaller than the MDC: a change that patients would notice can still be hidden within measurement error for one individual patient.',
     ],
     clinicalExample: {
       intro: 'Continuing with the ODI example (ICC = 0.85, SD_baseline = 12 points, SEM ≈ 4.6 points):',
@@ -442,8 +444,8 @@ export const RELIABILITY_CONTENT = {
         'MDD₉₅ = √2 × 1.96 × 4.6 = 1.414 × 1.96 × 4.6 ≈ 12.75 points.',
         'A patient improving from ODI 52 → 40 (Δ = 12 points) is below the MDD — this might be measurement error.',
         'A patient improving from ODI 52 → 37 (Δ = 15 points) exceeds the MDD — we can say with 95% confidence a real change occurred.',
-        'If the MCID for the ODI is ≈10 points (from the literature), any change above 10 points is clinically meaningful to the patient — but must also exceed the MDD of ≈13 points to be statistically trustworthy.',
-        'Decision rule from slides: Δ > SEM → possibly real; Δ > MDD → real change (95% confidence); Δ > MDD AND > MCID → clinically significant.',
+        'Real data, SF-36 physical component (MDC ≈ 9, MCID ≈ 4): Patient A improves by 3 points, below both thresholds, so no conclusion can be drawn. Patient B improves by 6 points, above the MCID but below the MDC: it might matter to the patient, but it cannot be confirmed as a real change. Patient C improves by 12 points: a real and clinically important change.',
+        'Decision rule: compare the change (post − pre) with the MDD, never with the SEM of a single score. Change > MDD → real change (95% confidence). Change > MDD and ≥ MCID → real and clinically important. Change < MDD → no conclusion can be drawn.',
       ],
     },
     diagramId: 'mdd-diagram',
@@ -463,8 +465,12 @@ export const RELIABILITY_CONTENT = {
           a: 'The MDD is a statistical threshold: the minimum change needed to rule out random measurement error with 95% confidence. The MCID is a clinical threshold: the minimum change that a patient considers subjectively meaningful. A change can be real (exceed MDD) without being important to the patient (below MCID).',
         },
         {
-          q: 'Arrange in order from smallest to largest: MCID, SEM, MDD, measurement error.',
-          a: 'Measurement error (random noise in a single score) < SEM (expected standard deviation of that error) < MDD (minimum change exceeding error with 95% confidence, ≈2.77 × SEM) < MCID (minimum change subjectively meaningful to the patient, by definition larger than MDD).',
+          q: 'Is the MCID always larger than the MDD? Use the SF-36 physical component values (MDC ≈ 9.0, MCID ≈ 2.6–4.7) to explain.',
+          a: 'No. The MDD is always larger than the SEM (MDD ≈ 2.77 × SEM), but the MCID is estimated from patients\' own ratings, so it can be larger or smaller than the MDD. For the SF-36 physical component the MCID (≈ 2.6–4.7) is smaller than the MDC (≈ 9.0): a change that patients would notice can still be within measurement error for one individual. The instrument is useful for group averages but less precise for single-patient decisions.',
+        },
+        {
+          q: 'A patient\'s SF-36 physical component score improves by 6 points (MDC ≈ 9, MCID ≈ 4). How do you interpret this change?',
+          a: 'The change is above the MCID, so it might be meaningful to the patient, but it is below the MDC, so it cannot be confirmed as a real change: no conclusion can be drawn for this individual. A change of more than 9 points would be both real and clinically important.',
         },
       ],
     },

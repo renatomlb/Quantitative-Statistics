@@ -131,7 +131,7 @@ export const SECTIONS = [
     icon: "κ",
     learningOutcomes: ["3b", "3f"],
     description:
-      "Assess measurement consistency using Cohen’s Kappa, Coefficient of Variation, Standard Error of Measurement, and Minimal Detectable Difference.",
+      "Assess measurement consistency using Cohen’s Kappa, Coefficient of Variation, Standard Error of Measurement, Minimal Detectable Difference and the Minimal Clinically Important Difference.",
     subsections: [
       { id: "reliability-def", title: "Definition & Examples", number: "4.1" },
       {
@@ -165,7 +165,7 @@ export const SECTIONS = [
       },
       {
         id: "mdd",
-        title: "Minimal Detectable Difference (MDD / MDC)",
+        title: "MDD / MDC and MCID",
         number: "4.5",
       },
     ],

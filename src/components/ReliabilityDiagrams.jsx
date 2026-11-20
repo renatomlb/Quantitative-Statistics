@@ -296,110 +296,104 @@ export function CVDiagram() {
 
 /* ── 4.4  SEM Diagram ────────────────────────────────────────────────────── */
 export function SEMDiagram() {
-  const W = 300, H = 175;
-  const cx = 150, cy = 82, barH = 28;
-  const trueScore = cx;
-  const semPx = 78;
+  const W = 300, H = 185;
+  const cx = 150, cy = 86, barH = 30;
+  const sem = 40;                     // 1 SEM in px
+  const sem95 = sem * 1.96;           // 1.96 SEM in px
+  const dots = [-52, -31, -18, -6, 9, 22, 35, 61];
 
   return (
     <div className="dd--sem">
       <p className="dd-heading">SEM = SD × √(1 − ICC)</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-sem-svg" role="img" aria-label="Horizontal band showing SEM range around the true score with observed measurement dots within plus or minus SEM">
-        {/* SEM band */}
-        <rect x={trueScore - semPx} y={cy - barH / 2} width={semPx * 2} height={barH} fill="#aed6f1" opacity={0.7} rx={4} />
-        <text x={cx} y={cy + 5} textAnchor="middle" fontSize={10} fill="#1a5276" fontWeight="600">± SEM range</text>
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-sem-svg" role="img" aria-label="Repeated measurements scattered around the true score: about two thirds within plus or minus one SEM and about 95 percent within plus or minus 1.96 SEM">
+        {/* ±1.96 SEM band (95%) */}
+        <rect x={cx - sem95} y={cy - barH / 2} width={sem95 * 2} height={barH} fill="#d6eaf8" rx={4} />
+        {/* ±1 SEM band (≈68%) */}
+        <rect x={cx - sem} y={cy - barH / 2} width={sem * 2} height={barH} fill="#aed6f1" />
 
         {/* True score marker */}
-        <line x1={trueScore} y1={cy - barH / 2 - 12} x2={trueScore} y2={cy + barH / 2 + 12} stroke="#1a5276" strokeWidth={2.5} />
-        <text x={trueScore} y={cy - barH / 2 - 16} textAnchor="middle" fontSize={9.5} fill="#1a5276" fontWeight="600">True score (T)</text>
+        <line x1={cx} y1={cy - barH / 2 - 12} x2={cx} y2={cy + barH / 2 + 12} stroke="#1a5276" strokeWidth={2.5} />
+        <text x={cx} y={cy - barH / 2 - 16} textAnchor="middle" fontSize={9.5} fill="#1a5276" fontWeight="600">True score (T)</text>
 
-        {/* Left boundary */}
-        <line x1={trueScore - semPx} y1={cy - barH / 2 - 8} x2={trueScore - semPx} y2={cy + barH / 2 + 8} stroke="#2471a3" strokeWidth={2} />
-        <text x={trueScore - semPx} y={cy + barH / 2 + 20} textAnchor="middle" fontSize={9.5} fill="#2471a3">T − SEM</text>
-
-        {/* Right boundary */}
-        <line x1={trueScore + semPx} y1={cy - barH / 2 - 8} x2={trueScore + semPx} y2={cy + barH / 2 + 8} stroke="#2471a3" strokeWidth={2} />
-        <text x={trueScore + semPx} y={cy + barH / 2 + 20} textAnchor="middle" fontSize={9.5} fill="#2471a3">T + SEM</text>
+        {/* Band boundaries */}
+        {[-1, 1].map(sg => (
+          <g key={'s' + sg}>
+            <line x1={cx + sg * sem} y1={cy + barH / 2} x2={cx + sg * sem} y2={cy + barH / 2 + 8} stroke="#2471a3" strokeWidth={1.5} />
+            <text x={cx + sg * sem} y={cy + barH / 2 + 19} textAnchor="middle" fontSize={9} fill="#2471a3">{sg < 0 ? 'T − SEM' : 'T + SEM'}</text>
+            <line x1={cx + sg * sem95} y1={cy - barH / 2 - 6} x2={cx + sg * sem95} y2={cy - barH / 2} stroke="#5d6d7e" strokeWidth={1.5} />
+            <text x={cx + sg * sem95} y={cy - barH / 2 - 9} textAnchor="middle" fontSize={8.5} fill="#5d6d7e">{sg < 0 ? '−1.96 SEM' : '+1.96 SEM'}</text>
+          </g>
+        ))}
 
         {/* Observed score dots */}
-        {[trueScore - 28, trueScore + 48, trueScore + 14, trueScore - 58].map((x, i) => (
-          <circle key={i} cx={x} cy={cy} r={5} fill="#e74c3c" opacity={0.8} />
+        {dots.map((d, i) => (
+          <circle key={i} cx={cx + d} cy={cy} r={4.5} fill="#e74c3c" opacity={0.85} />
         ))}
-        <text x={W / 2} y={H - 10} textAnchor="middle" fontSize={9} fill="#888">
-          Red dots = observed scores; all within ±SEM of true score
+        <text x={W / 2} y={H - 22} textAnchor="middle" fontSize={9} fill="#666">
+          Red dots = repeated measurements of the same patient
+        </text>
+        <text x={W / 2} y={H - 9} textAnchor="middle" fontSize={9} fill="#666">
+          ≈ 2/3 fall within ±1 SEM · ≈ 95% within ±1.96 SEM
         </text>
       </svg>
     </div>
   );
 }
 
-/* ── 4.5  MDD Diagram (threshold bands) ─────────────────────────────────── */
+/* ── 4.5  MDD / MCID Diagram (change-score number line) ─────────────────── */
 export function MDDDiagram() {
-  const W = 290, H = 280;
-  const cx = 50, cw = 190;
-  const midY = 140;
-  const semPx = 30, mddPx = 88;
-
-  const zones = [
-    { y: midY - mddPx, h: mddPx - semPx, fill: '#fdebd0' },
-    { y: midY + semPx, h: mddPx - semPx, fill: '#fdebd0' },
-    { y: midY - semPx, h: semPx * 2,     fill: '#fadbd8' },
+  const W = 320, H = 230;
+  const x0 = 20, x1 = 300, axY = 120, bandH = 40;
+  const max = 15;
+  const toX = v => x0 + (v / max) * (x1 - x0);
+  const mcid = 4, mdc = 9;
+  const patients = [
+    { v: 3, name: 'A +3' },
+    { v: 6, name: 'B +6' },
+    { v: 12, name: 'C +12' },
   ];
-
-  const lblX = cx + cw + 4;
 
   return (
     <div className="dd--mdd">
-      <p className="dd-heading">MDD Threshold Interpretation</p>
-      <svg viewBox={`0 0 ${W} ${H}`} className="dd-mdd-svg" role="img" aria-label="MDD threshold diagram with zones: real change above MDD95, possibly real between SEM and MDD, and random measurement error within SEM">
-        <defs>
-          <marker id="arr-mdd" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#555" />
-          </marker>
-        </defs>
+      <p className="dd-heading">Is the change real? Does it matter?</p>
+      <svg viewBox={`0 0 ${W} ${H}`} className="dd-mdd-svg" role="img" aria-label="Number line of change scores with the MCID at about 4 points and the MDC at about 9 points for the SF-36 physical component. Patient A at plus 3 is below both, patient B at plus 6 is above the MCID but below the MDC, patient C at plus 12 is above both.">
+        {/* zones */}
+        <rect x={x0} y={axY - bandH} width={toX(mcid) - x0} height={bandH} fill="#fadbd8" />
+        <rect x={toX(mcid)} y={axY - bandH} width={toX(mdc) - toX(mcid)} height={bandH} fill="#fdebd0" />
+        <rect x={toX(mdc)} y={axY - bandH} width={x1 - toX(mdc)} height={bandH} fill="#d5f5e3" />
 
-        {/* y-axis */}
-        <line x1={cx} y1={16} x2={cx} y2={H - 24} stroke="#555" strokeWidth={1.5} markerEnd="url(#arr-mdd)" />
-        <text x={cx - 8} y={H / 2} textAnchor="middle" fontSize={8.5} fill="#555"
-              transform={`rotate(-90, ${cx - 8}, ${H / 2})`}>
-          Change in score
-        </text>
+        {/* axis */}
+        <line x1={x0} y1={axY} x2={x1} y2={axY} stroke="#555" strokeWidth={1.5} />
+        {[0, 5, 10, 15].map(t => (
+          <g key={t}>
+            <line x1={toX(t)} y1={axY} x2={toX(t)} y2={axY + 4} stroke="#555" />
+            <text x={toX(t)} y={axY + 14} textAnchor="middle" fontSize={8.5} fill="#555">+{t}</text>
+          </g>
+        ))}
+        <text x={x1} y={axY + 26} textAnchor="end" fontSize={8.5} fill="#555">change in score (post − pre)</text>
 
-        {/* Coloured zones */}
-        {zones.map((z, i) => (
-          <rect key={i} x={cx + 2} y={z.y} width={cw - 4} height={z.h} fill={z.fill} />
+        {/* thresholds */}
+        <line x1={toX(mcid)} y1={axY - bandH - 22} x2={toX(mcid)} y2={axY} stroke="#d35400" strokeWidth={2} strokeDasharray="4 3" />
+        <text x={toX(mcid)} y={axY - bandH - 26} textAnchor="middle" fontSize={9} fill="#d35400" fontWeight="700">MCID ≈ 4</text>
+        <line x1={toX(mdc)} y1={axY - bandH - 22} x2={toX(mdc)} y2={axY} stroke="#1e8449" strokeWidth={2} strokeDasharray="4 3" />
+        <text x={toX(mdc)} y={axY - bandH - 26} textAnchor="middle" fontSize={9} fill="#1e8449" fontWeight="700">MDC ≈ 9</text>
+
+        {/* patients */}
+        {patients.map(p => (
+          <g key={p.name}>
+            <circle cx={toX(p.v)} cy={axY - bandH / 2} r={6} fill="#e74c3c" />
+            <text x={toX(p.v)} y={axY - bandH / 2 - 10} textAnchor="middle" fontSize={8.5} fill="#922b21" fontWeight="700">{p.name}</text>
+          </g>
         ))}
 
-        {/* ±MDD lines (solid) */}
-        <line x1={cx} y1={midY - mddPx} x2={cx + cw} y2={midY - mddPx} stroke="#2e86ab" strokeWidth={2.5} />
-        <line x1={cx} y1={midY + mddPx} x2={cx + cw} y2={midY + mddPx} stroke="#2e86ab" strokeWidth={2.5} />
-
-        {/* ±SEM lines (dashed) */}
-        <line x1={cx} y1={midY - semPx} x2={cx + cw} y2={midY - semPx} stroke="#e74c3c" strokeWidth={2} strokeDasharray="5 3" />
-        <line x1={cx} y1={midY + semPx} x2={cx + cw} y2={midY + semPx} stroke="#e74c3c" strokeWidth={2} strokeDasharray="5 3" />
-
-        {/* Zero line */}
-        <line x1={cx} y1={midY} x2={cx + cw} y2={midY} stroke="#555" strokeWidth={1} strokeDasharray="2 2" />
-
-        {/* Line labels (right side) */}
-        <text x={lblX} y={midY - mddPx + 5} fontSize={9} fill="#2e86ab" fontWeight="700">+MDD₉₅</text>
-        <text x={lblX} y={midY + mddPx + 5} fontSize={9} fill="#2e86ab" fontWeight="700">−MDD₉₅</text>
-        <text x={lblX} y={midY - semPx + 5} fontSize={9} fill="#e74c3c">+SEM</text>
-        <text x={lblX} y={midY + semPx + 5} fontSize={9} fill="#e74c3c">−SEM</text>
-        <text x={lblX} y={midY + 5} fontSize={9} fill="#555">0</text>
-
-        {/* X marker: real change (above +MDD) */}
-        <text x={cx + 38} y={midY - mddPx - 16} fontSize={16} fill="#1e8449" fontWeight="700" textAnchor="middle">✕</text>
-        <text x={cx + 70} y={midY - mddPx - 20} fontSize={8.5} fill="#1e8449" fontWeight="600">Real change</text>
-        <text x={cx + 70} y={midY - mddPx - 10} fontSize={8.5} fill="#1e8449">(95% confidence)</text>
-
-        {/* X marker: possibly real (between SEM and MDD) */}
-        <text x={cx + 38} y={midY - (semPx + mddPx) / 2 + 6} fontSize={16} fill="#e67e22" fontWeight="700" textAnchor="middle">✕</text>
-        <text x={cx + 70} y={midY - (semPx + mddPx) / 2 + 2} fontSize={8.5} fill="#e67e22">Possibly real —</text>
-        <text x={cx + 70} y={midY - (semPx + mddPx) / 2 + 13} fontSize={8.5} fill="#e67e22">high chance of error</text>
-
-        {/* Error zone label */}
-        <text x={cx + cw / 2 + 10} y={midY + 5} fontSize={8.5} fill="#c0392b" textAnchor="middle">Random measurement error</text>
+        {/* legend */}
+        <rect x={x0} y={158} width={10} height={10} fill="#fadbd8" />
+        <text x={x0 + 15} y={167} fontSize={8.5} fill="#555">Below MDC: no conclusion can be drawn</text>
+        <rect x={x0} y={174} width={10} height={10} fill="#fdebd0" />
+        <text x={x0 + 15} y={183} fontSize={8.5} fill="#555">Above MCID, below MDC: may matter, not confirmed</text>
+        <rect x={x0} y={190} width={10} height={10} fill="#d5f5e3" />
+        <text x={x0 + 15} y={199} fontSize={8.5} fill="#555">Above MDC and MCID: real and clinically important</text>
+        <text x={W / 2} y={H - 6} textAnchor="middle" fontSize={8} fill="#888">Example: SF-36 physical component (SRC-P1)</text>
       </svg>
     </div>
   );
